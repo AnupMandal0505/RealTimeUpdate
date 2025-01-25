@@ -34,7 +34,7 @@ CACHES = {
         'LOCATION': REDIS_URL,
         'OPTIONS': {
             'CLIENT_CLASS': 'django_redis.client.DefaultClient',
-            'LOCATION': 'redis://red-cuagigtsvqrc73doni7g:6379'
+            'LOCATION': 'redis://110.224.100.51/32'
 
         }
     }
