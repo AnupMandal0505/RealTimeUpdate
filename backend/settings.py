@@ -27,7 +27,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['realtimeupdate.onrender.com', '127.0.0.1']
 
-REDIS_URL = 'redis://red-cuagigtsvqrc73doni7g:6379'
+REDIS_URL = 'rediss://red-cuagigtsvqrc73doni7g:D2Qc2hvyjF3yOG49tdWRMT8D4C8yff3P@oregon-redis.render.com:6379'
 CACHES = {
     'default': {
         'BACKEND': 'django_redis.cache.RedisCache',
