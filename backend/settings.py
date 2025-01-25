@@ -27,6 +27,16 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['realtimeupdate.onrender.com', '127.0.0.1']
 
+REDIS_URL = 'redis://red-cuagigtsvqrc73doni7g:6379'
+CACHES = {
+    'default': {
+        'BACKEND': 'django_redis.cache.RedisCache',
+        'LOCATION': REDIS_URL,
+        'OPTIONS': {
+            'CLIENT_CLASS': 'django_redis.client.DefaultClient'
+        }
+    }
+}
 
 # Application definition
 
@@ -146,8 +156,11 @@ ASGI_APPLICATION = 'backend.asgi.application'
 # For development (in-memory channel layer)
 CHANNEL_LAYERS = {
     "default": {
-        "BACKEND": "channels.layers.InMemoryChannelLayer"
-    }
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [REDIS_URL],
+        },
+    },
 }
 
 # For production (Redis channel layer)
@@ -186,7 +199,7 @@ LOGGING = {
         'level': 'INFO',
     },
     'loggers': {
-        'app': {
+        'django': {
             'handlers': ['console'],
             'level': 'INFO',
             'propagate': True,
