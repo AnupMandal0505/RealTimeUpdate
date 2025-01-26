@@ -27,57 +27,15 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['realtimeupdate.onrender.com', '127.0.0.1']
 
-import redis
-
-# Redis connection settings
-REDIS_HOST = 'oregon-redis.render.com'
-REDIS_PORT = 6379
-REDIS_USERNAME = 'red-cuagigtsvqrc73doni7g'
-REDIS_PASSWORD = 'D2Qc2hvyjF3yOG49tdWRMT8D4C8yff3P'
-REDIS_TLS = True
-
-# Redis client ko create karein
-redis_client = redis.Redis(
-    host=REDIS_HOST,
-    port=REDIS_PORT,
-    username=REDIS_USERNAME,
-    password=REDIS_PASSWORD,
-    ssl=REDIS_TLS
-)
-
-# Redis client ko use karein
-redis_client.set('key', 'value')
-value = redis_client.get('key')
-print(value)
-
-
-# settings.py
-REDIS_HOST = 'oregon-redis.render.com'
-REDIS_PORT = 6379
-REDIS_USERNAME = 'red-cuagigtsvqrc73doni7g'
-REDIS_PASSWORD = 'D2Qc2hvyjF3yOG49tdWRMT8D4C8yff3P'
-REDIS_TLS = True
-
-CACHES = {
-    'default': {
-        'BACKEND': 'django_redis.cache.RedisCache',
-        'LOCATION': f'redis://{REDIS_USERNAME}:{REDIS_PASSWORD}@{REDIS_HOST}:{REDIS_PORT}/0',
-        'OPTIONS': {
-            'CLIENT_CLASS': 'django_redis.client.DefaultClient',
-            'SSL': REDIS_TLS
-        }
-    }
-}
-# # Redis Configuration
-# REDIS_URL = 'rediss://red-cuagigtsvqrc73doni7g:D2Qc2hvyjF3yOG49tdWRMT8D4C8yff3P@oregon-redis.render.com:6379'
-
-# # Cache configuration
+REDIS_URL = 'rediss://red-cuagigtsvqrc73doni7g:D2Qc2hvyjF3yOG49tdWRMT8D4C8yff3P@oregon-redis.render.com:6379'
 # CACHES = {
-#     "default": {
-#         "BACKEND": "django_redis.cache.RedisCache",
-#         "LOCATION": REDIS_URL,
-#         "OPTIONS": {
-#             "CLIENT_CLASS": "django_redis.client.DefaultClient",
+#     'default': {
+#         'BACKEND': 'django_redis.cache.RedisCache',
+#         'LOCATION': REDIS_URL,
+#         'OPTIONS': {
+#             'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+#             'LOCATION': 'redis://110.224.100.51/32'
+
 #         }
 #     }
 # }
@@ -197,12 +155,22 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Add Channels configuration
 ASGI_APPLICATION = 'backend.asgi.application'
 
-# Channel layers configuration for WebSocket
+# For development (in-memory channel layer)
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [REDIS_URL],
+        },
+    },
+}
+
+# For production (Redis channel layer)
 # CHANNEL_LAYERS = {
 #     "default": {
 #         "BACKEND": "channels_redis.core.RedisChannelLayer",
 #         "CONFIG": {
-#             "hosts": [REDIS_URL],
+#             "hosts": [("127.0.0.1", 6379)],  # Redis server configuration
 #         },
 #     },
 # }
