@@ -68,6 +68,9 @@ MIDDLEWARE = [
 
 ]
 
+# Add CSRF protection
+CSRF_COOKIE_SECURE = True 
+
 ROOT_URLCONF = 'backend.urls'
 
 TEMPLATES = [
