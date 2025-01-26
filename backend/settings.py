@@ -27,15 +27,16 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['realtimeupdate.onrender.com', '127.0.0.1']
 
+# Redis Configuration
 REDIS_URL = 'rediss://red-cuagigtsvqrc73doni7g:D2Qc2hvyjF3yOG49tdWRMT8D4C8yff3P@oregon-redis.render.com:6379'
-CACHES = {
-    'default': {
-        'BACKEND': 'django_redis.cache.RedisCache',
-        'LOCATION': REDIS_URL,
-        'OPTIONS': {
-            'CLIENT_CLASS': 'django_redis.client.DefaultClient',
-            'LOCATION': 'redis://110.224.100.51/32'
 
+# Cache configuration
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": REDIS_URL,
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
         }
     }
 }
@@ -155,28 +156,15 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Add Channels configuration
 ASGI_APPLICATION = 'backend.asgi.application'
 
-# For development (in-memory channel layer)
-# settings.py
-CACHES = {
+# Channel layers configuration for WebSocket
+CHANNEL_LAYERS = {
     "default": {
-        "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": "redis://red-cuagigtsvqrc73doni7g:6379@redis.render.com:6379/1",
-        "OPTIONS": {
-            "CLIENT_CLASS": "django_redis.client.DefaultClient"
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [REDIS_URL],
         },
-        # "KEY_PREFIX": "example"
-    }
+    },
 }
-
-# For production (Redis channel layer)
-# CHANNEL_LAYERS = {
-#     "default": {
-#         "BACKEND": "channels_redis.core.RedisChannelLayer",
-#         "CONFIG": {
-#             "hosts": [("127.0.0.1", 6379)],  # Redis server configuration
-#         },
-#     },
-# }
 
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
