@@ -159,7 +159,7 @@ ASGI_APPLICATION = 'backend.asgi.application'
 # settings.py
 CACHES = {
     "default": {
-        "BACKEND": "django_redis.cache.RedisCache",
+        "BACKEND": "channels_redis.core.RedisChannelLayere",
         "LOCATION": "redis://red-cuagigtsvqrc73doni7g:6379@redis.render.com:6379/1",
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient"
