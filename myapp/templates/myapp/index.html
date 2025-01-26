@@ -79,7 +79,7 @@
             }
 
             function connectWebSocket() {
-                const wsUrl = `ws://${window.location.host}/ws/appointments/`;
+                const wsUrl = `wss://realtimeupdate.onrender.com/ws/appointments/`;
                 try {
                     socket = new WebSocket(wsUrl);
                     setupWebSocketHandlers();

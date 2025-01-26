@@ -27,23 +27,18 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['realtimeupdate.onrender.com', '127.0.0.1']
 
-# REDIS_URL = 'rediss://red-cuagigtsvqrc73doni7g:D2Qc2hvyjF3yOG49tdWRMT8D4C8yff3P@oregon-redis.render.com:6379'
-REDIS_HOST = 'oregon-redis.render.com'
-REDIS_PORT = 6379
-REDIS_USERNAME = 'red-cuagigtsvqrc73doni7g'
-REDIS_PASSWORD = 'D2Qc2hvyjF3yOG49tdWRMT8D4C8yff3P'
-REDIS_DB = 0
+REDIS_URL = 'rediss://red-cuagigtsvqrc73doni7g:D2Qc2hvyjF3yOG49tdWRMT8D4C8yff3P@oregon-redis.render.com:6379'
+# CACHES = {
+#     'default': {
+#         'BACKEND': 'django_redis.cache.RedisCache',
+#         'LOCATION': REDIS_URL,
+#         'OPTIONS': {
+#             'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+#             'LOCATION': 'redis://110.224.100.51/32'
 
-CACHES = {
-    'default': {
-        'BACKEND': 'django_redis.cache.RedisCache',
-        'LOCATION': f'redis://{REDIS_USERNAME}:{REDIS_PASSWORD}@{REDIS_HOST}:{REDIS_PORT}/{REDIS_DB}',
-        'OPTIONS': {
-            'CLIENT_CLASS': 'django_redis.client.DefaultClient',
-            'SSL': True
-        }
-    }
-}
+#         }
+#     }
+# }
 
 # Application definition
 
@@ -161,14 +156,14 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 ASGI_APPLICATION = 'backend.asgi.application'
 
 # For development (in-memory channel layer)
-# CHANNEL_LAYERS = {
-#     "default": {
-#         "BACKEND": "channels_redis.core.RedisChannelLayer",
-#         "CONFIG": {
-#             "hosts": [REDIS_URL],
-#         },
-#     },
-# }
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [REDIS_URL],
+        },
+    },
+}
 
 # For production (Redis channel layer)
 # CHANNEL_LAYERS = {
