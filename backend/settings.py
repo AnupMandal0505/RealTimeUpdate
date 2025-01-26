@@ -156,13 +156,16 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 ASGI_APPLICATION = 'backend.asgi.application'
 
 # For development (in-memory channel layer)
-CHANNEL_LAYERS = {
+# settings.py
+CACHES = {
     "default": {
-        "BACKEND": "channels_redis.core.RedisChannelLayer",
-        "CONFIG": {
-            "hosts": [REDIS_URL],
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://red-cuagigtsvqrc73doni7g:6379@redis.render.com:6379/1",
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient"
         },
-    },
+        # "KEY_PREFIX": "example"
+    }
 }
 
 # For production (Redis channel layer)
@@ -184,6 +187,8 @@ REST_FRAMEWORK = {
 # CORS settings
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
+    # "http://localhost:8081",
+    "http://10.0.2.2:8081"
 ]
 CORS_ALLOW_CREDENTIALS = True
 
