@@ -70,6 +70,9 @@ MIDDLEWARE = [
 
 # Add CSRF protection
 CSRF_COOKIE_SECURE = True 
+CSRF_TRUSTED_ORIGINS = [
+    'https://realtimeupdate.onrender.com',
+]
 
 ROOT_URLCONF = 'backend.urls'
 
